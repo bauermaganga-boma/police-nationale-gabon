@@ -2,9 +2,9 @@
 (function(){
 'use strict';
 const AG=window.AG,F=AG.F,E=AG.E,$=AG.$,$$=AG.$$,ic=AG.ic,DAY=AG.DAY;
-const TCOL={preplainte:'#17407F',cyber:'#E0A91B',anonyme:'#0F8F4F',objet:'#EA580C',rdv:'#2F6FD0',message:'#8a5a2b'};
+const TCOL={preplainte:'#17407F',cyber:'#E0A91B',anonyme:'#0F8F4F',objet:'#B58500',rdv:'#2F6FD0',message:'#8a5a2b'};
 const ALST={nouvelle:'Nouvelle',prise:'Prise en charge',patrouille:'Patrouille dépêchée',cloturee:'Clôturée'};
-AG.ALST=ALST;AG.ALCOL={nouvelle:'#EA580C',prise:'#E0A91B',patrouille:'#17407F',cloturee:'#0F8F4F'};
+AG.ALST=ALST;AG.ALCOL={nouvelle:'#B58500',prise:'#E0A91B',patrouille:'#17407F',cloturee:'#0F8F4F'};
 function trend(cur,prev,goodUp){
   if(!prev&&!cur)return '<span class="trend eq">=</span>';
   const p=prev?Math.round((cur-prev)/prev*100):100;if(p===0)return '<span class="trend eq">= 0 %</span>';
@@ -30,7 +30,7 @@ function donut(parts,total){
   return s+'<text x="85" y="88" text-anchor="middle" font-family="Sora,sans-serif" font-size="26" font-weight="800" fill="#0A1B33">'+total+'</text><text x="85" y="105" text-anchor="middle" font-size="11" fill="#5B6B82">demandes</text></svg>';
 }
 function gauge(pct){
-  const a=Math.PI*(1-pct/100),x=60+50*Math.cos(a),y=62-50*Math.sin(a),col=pct>=70?'#0F8F4F':pct>=40?'#E0A91B':'#EA580C';
+  const a=Math.PI*(1-pct/100),x=60+50*Math.cos(a),y=62-50*Math.sin(a),col=pct>=70?'#0F8F4F':pct>=40?'#E0A91B':'#B58500';
   return '<svg viewBox="0 0 120 74" role="img" aria-label="'+pct+' % des dossiers clôturés sous 72 h"><path d="M10 62A50 50 0 0 1 110 62" fill="none" stroke="#EEF2F8" stroke-width="12" stroke-linecap="round"/><path d="M10 62A50 50 0 0 1 '+x.toFixed(1)+' '+y.toFixed(1)+'" fill="none" stroke="'+col+'" stroke-width="12" stroke-linecap="round"/><text x="60" y="60" text-anchor="middle" font-family="Sora,sans-serif" font-size="20" font-weight="800" fill="#0A1B33">'+pct+'%</text></svg>';
 }
 function kpi(cls,icon,label,val,sub){return '<div class="card kpi '+cls+'"><span class="ki">'+ic(icon)+'</span><small>'+E(label)+'</small><b>'+val+'</b><span>'+sub+'</span></div>'}

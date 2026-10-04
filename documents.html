@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Documents et guides – Forces de Police Nationale (FPN)</title>
+<meta name="theme-color" content="#0B2347"><meta name="color-scheme" content="only light">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="documents" data-title="Documents et guides">
+<main>
+<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Documents et guides</div><h1><span class="ph-ic" data-i="book"></span>Documents et guides pratiques</h1><p>Que faire en cas de vol, d’arnaque ou de perte de papiers ? Des fiches claires, imprimables, pour agir vite — même sans connexion stable.</p></div></section>
+
+<section class="s" style="padding-top:40px"><div class="wrap">
+ <div class="info" style="margin-bottom:24px">Contenus de démonstration à faire valider par la direction juridique et la communication des FPN avant publication.</div>
+ <div class="sh"><span class="tag">Guides pratiques</span><h2>Je ne sais pas comment faire</h2></div>
+ <div class="docs" id="guides"></div>
+
+ <div class="sh" style="margin-top:48px"><span class="tag">Formulaires</span><h2>À imprimer et à remplir</h2><p>Sans internet ? Imprimez le formulaire, remplissez-le et déposez-le au commissariat.</p></div>
+ <div class="docs" id="forms"></div>
+
+ <div class="sh" style="margin-top:48px" id="faq"><span class="tag">Questions fréquentes</span><h2>On vous répond</h2></div>
+ <div class="grid2" style="align-items:start" id="faqs"></div>
+</div></section>
+</main>
+<div class="modal" id="m"><div class="mbox lg art"><button class="x" aria-label="Fermer">×</button><div id="mc"></div></div></div>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/layout.js"></script>
+<script>
+const G=[
+ {id:'vol',i:'shield',c:'c1',t:'Que faire en cas de vol ?',d:'Les bons réflexes dans les premières heures.',steps:['Mettez-vous en sécurité. En cas de danger immédiat, appelez le <b>177</b>.','Ne touchez à rien sur les lieux si un cambriolage a eu lieu, pour préserver les traces.','Faites opposition sans attendre : bloquez la carte SIM et le compte Mobile Money auprès de votre opérateur, bloquez vos cartes bancaires.','Déposez une <a href="demarches.html#preplainte" style="color:var(--blue);font-weight:700">pré-plainte en ligne</a> avec photos et factures, puis rendez-vous au commissariat choisi avec votre numéro de suivi.','Notez le numéro de série (IMEI) de votre téléphone s’il s’agit d’un vol de téléphone.'],pieces:['Pièce d’identité','Facture, boîte ou capture d’écran prouvant la propriété','Numéro de série / IMEI','Photos des dégâts le cas échéant']},
+ {id:'arnaque',i:'globe',c:'c2',t:'Victime d’une arnaque Mobile Money',d:'Agir vite pour limiter les dégâts.',steps:['Ne communiquez jamais votre code PIN, ni par appel, ni par SMS.','Contactez immédiatement votre opérateur pour signaler la transaction frauduleuse.','Conservez les captures d’écran, SMS, reçus de transfert et le numéro de l’auteur.','Faites un <a href="demarches.html#cyber" style="color:var(--blue);font-weight:700">signalement cyber</a> en joignant vos preuves.','Ne répondez plus à l’escroc et ne payez jamais pour « récupérer » votre argent.'],pieces:['Captures d’écran des échanges','Reçus ou références de transaction','Numéro ou profil de l’auteur']},
+ {id:'papiers',i:'id',c:'c5',t:'Perte de documents d’identité',d:'Déclarer la perte et refaire ses papiers.',steps:['Déclarez la perte dans la rubrique <a href="demarches.html#objet" style="color:var(--blue);font-weight:700">objets perdus</a> pour obtenir un récépissé de déclaration.','Rapprochez-vous des services concernés avec ce récépissé (la DGDI pour les passeports et cartes de séjour).','Prenez <a href="demarches.html#rdv" style="color:var(--blue);font-weight:700">rendez-vous en ligne</a> pour éviter les files d’attente.'],pieces:['Récépissé de déclaration de perte','Photocopie d’un ancien document si disponible','Photos d’identité']},
+ {id:'commissariat',i:'building',c:'c4',t:'Préparer sa venue au commissariat',d:'Venir avec le bon dossier gagne du temps.',steps:['Choisissez votre commissariat par <a href="commissariats.html" style="color:var(--blue);font-weight:700">province</a> et vérifiez ses horaires.','Apportez votre numéro de suivi si vous avez fait une pré-plainte.','Apportez une pièce d’identité et les éléments joints à votre dossier.','Soyez précis : dates, heures, lieux, description des personnes.'],pieces:['Numéro de suivi','Pièce d’identité','Preuves (photos, messages, factures)']},
+ {id:'violences',i:'heart',c:'c6',t:'Victime de violences',d:'Femmes, mineurs : vous n’êtes pas seul(e).',steps:['En cas de danger immédiat, appelez le <b>177</b> ou utilisez l’Alerte 177.','Rendez-vous dans un lieu sûr (chez un proche, au commissariat le plus proche).','Faites constater vos blessures par un médecin et conservez le certificat.','Vous pouvez faire un signalement discret ; le suivi est confidentiel.'],pieces:['Certificat médical','Photos, messages, témoignages']},
+ {id:'controle',i:'eye',c:'c3',t:'Lors d’un contrôle de police',d:'Garder son calme et connaître l’essentiel.',steps:['Restez calme et courtois. Présentez vos papiers si on vous les demande.','Vous pouvez demander à voir la carte professionnelle de l’agent et la vérifier sur le site.','Un policier authentique ne demande jamais d’argent pour « régler » une situation.','Si vous avez un doute ou subissez un abus, notez le lieu, l’heure et le nom ou le matricule, puis signalez-le.'],pieces:[]}
+];
+const FORMS=[{id:'f-plainte',t:'Formulaire de pré-plainte (papier)',d:'À remplir à la main et à déposer au commissariat.',i:'file'},{id:'f-objet',t:'Déclaration de perte d’un objet ou d’un document',d:'Version papier du formulaire en ligne.',i:'box'},{id:'f-signal',t:'Fiche de signalement',d:'Pour signaler un fait à un agent.',i:'eye'}];
+const FAQ=[['Que se passe-t-il après ma pré-plainte ?','Elle est transmise au commissariat que vous avez choisi. Vous suivez les étapes avec votre numéro : reçue, transmise, en cours, clôturée.'],['Puis-je joindre des photos ou des documents ?','Oui, à toutes les démarches : photos, captures d’écran, PDF, justificatifs.'],['Mon signalement anonyme est-il vraiment anonyme ?','Oui : aucune identité n’est demandée. Conservez le numéro de suivi pour consulter la réponse.'],['Dans quelle province dois-je déposer ma demande ?','Choisissez la province où les faits ont eu lieu ou celle de votre domicile, puis le commissariat le plus proche.'],['Les services sont-ils gratuits ?','Les démarches en ligne de cette plateforme sont gratuites. Les frais officiels éventuels (documents d’identité) sont ceux fixés par l’administration.'],['Et si je n’ai pas de smartphone ?','Rendez-vous au commissariat : un agent peut enregistrer votre démarche. Les canaux SMS et WhatsApp sont prévus.']];
+const tile=(x,type)=>`<button class="doc" data-t="${type}" data-id="${x.id}"><span class="ib ${x.c||'c1'}">${icon(x.i)}</span><span><b>${x.t}</b><span>${x.d}</span></span></button>`;
+document.getElementById('guides').innerHTML=G.map(g=>tile(g,'g')).join('');
+document.getElementById('forms').innerHTML=FORMS.map(f=>tile(f,'f')).join('');
+document.getElementById('faqs').innerHTML=[FAQ.slice(0,3),FAQ.slice(3)].map(c=>'<div>'+c.map(q=>`<div class="acc"><button>${q[0]}</button><div class="b">${q[1]}</div></div>`).join('')+'</div>').join('');
+document.querySelectorAll('.acc button').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('open'));
+const M=document.getElementById('m');
+const prn=`<div class="noprint" style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn navy" onclick="document.body.classList.add('pm');window.print();setTimeout(()=>document.body.classList.remove('pm'),500)">${icon('printer')} Imprimer</button><a class="btn line" href="demarches.html">Faire la démarche en ligne</a></div>`;
+function lines(n){return Array.from({length:n},()=>'<div class="pf"></div>').join('')}
+function open(type,id){
+  let h='';
+  if(type==='g'){const g=G.find(x=>x.id===id);h=`<h2>${g.t}</h2><p>${g.d}</p><ol style="margin:14px 0 14px 22px;color:#33445c;display:grid;gap:8px">${g.steps.map(s=>`<li>${s}</li>`).join('')}</ol>${g.pieces.length?`<h4 style="margin-top:14px">Pièces utiles</h4><ul>${g.pieces.map(p=>`<li>${p}</li>`).join('')}</ul>`:''}<div class="warn" style="margin-top:14px">En cas de danger immédiat, appelez le <b>177</b>.</div>${prn}`}
+  else{const f=FORMS.find(x=>x.id===id);h=`<h2>${f.t}</h2><p style="color:var(--muted)">Forces de Police Nationale — République gabonaise · Commissariat : ____________________</p><div style="margin-top:14px"><b>Nom et prénom</b>${lines(1)}<b>Date de naissance et téléphone</b>${lines(1)}<b>Adresse / quartier</b>${lines(1)}<b>Date, heure et lieu des faits</b>${lines(1)}<b>Description des faits</b>${lines(6)}<b>Personnes ou témoins éventuels</b>${lines(2)}<p style="margin-top:14px;font-size:.85rem;color:var(--muted)">Je certifie l’exactitude des informations ci-dessus. Date et signature : ________________</p></div>${prn}`}
+  document.getElementById('mc').innerHTML=h;M.classList.add('on');
+}
+document.querySelectorAll('.doc').forEach(b=>b.onclick=()=>open(b.dataset.t,b.dataset.id));
+M.querySelector('.x').onclick=()=>M.classList.remove('on');M.onclick=e=>{if(e.target===M)M.classList.remove('on')};
+</script>
+</body>
+</html>

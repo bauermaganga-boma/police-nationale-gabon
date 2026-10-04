@@ -46,6 +46,10 @@ const I={
  wifi:'<path d="M2 9a15 15 0 0 1 20 0M5.500 12.500a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0M12 19.500h.01"/>',
  sms:'<path d="M4 4h16v12H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
  key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>',
+ download:'<path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 20h16"/>',
+ book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5"/><path d="M8 7h7"/>',
+ question:'<circle cx="12" cy="12" r="9"/><path d="M9.500 9.500a2.500 2.500 0 1 1 3.500 2.300c-.700.400-1 1-1 1.700M12 17h.01"/>',
+ printer:'<path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M7 14h10v7H7z"/>',
  trophy:'<path d="M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3M12 14v4M8 21h8M10 18h4"/>'
 };
 const ic=(n,c)=>`<svg class="ico ${c||''}" viewBox="0 0 24 24" aria-hidden="true">${I[n]||''}</svg>`;
@@ -53,12 +57,12 @@ window.icon=ic;
 window.ib=(n,c)=>`<span class="ib ${c||'c1'}">${ic(n)}</span>`;
 window.ICONS=I;
 
-const NAV=[['index.html','Accueil','home'],['institution.html','L’institution','shield'],['demarches.html','Mes démarches','file'],['prevention.html','Prévention','heart'],['commissariats.html','Commissariats','map'],['recrutement.html','Recrutement','cap'],['actualites.html','Actualités','news']];
+const NAV=[['index.html','Accueil','home'],['demarches.html','Mes démarches','file'],['institution.html','L’institution','shield'],['recrutement.html','Métiers & recrutement','cap'],['prevention.html','Prévention','heart'],['actualites.html','Actualités','news'],['documents.html','Documents & guides','book'],['commissariats.html','Commissariats','map']];
 const isIdx=P==='index';
 const LOGO='assets/img/logo.png';
 
 /* En-tête */
-const strip=`<div class="strip"><div class="wrap"><a href="tel:177"><span class="pulse"></span> Urgence police : <b>177</b></a><span>Préfecture de police : +241 65 81 81 81</span><span class="demo">Version de démonstration · République gabonaise</span></div></div>`;
+const strip=`<div class="strip"><div class="wrap"><a href="tel:177">${ic('phone')} Urgence police : <b>177</b></a><span>Préfecture de police : +241 65 81 81 81</span><button class="lite" id="liteBtn" aria-pressed="false" title="Réduit la consommation de données (sans photos)">Mode économe en données</button></div></div>`;
 const head=`<header class="head ${isIdx?'':'inner'}"><div class="wrap">
  ${isIdx?'':`<button class="mback" id="mback" aria-label="Retour">${ic('back')}</button>`}
  <a class="brand" href="index.html"><img src="${LOGO}" alt="Écusson des Forces de Police Nationale"><span><b>${isIdx?'Forces de Police Nationale':(TITLE||'Forces de Police Nationale')}</b><small>FPN · République gabonaise</small></span></a>
@@ -66,7 +70,10 @@ const head=`<header class="head ${isIdx?'':'inner'}"><div class="wrap">
  <div class="cta"><a class="btn line sm" href="agents.html">${ic('lock')} Espace agents</a><button class="btn red sm" data-alert>${ic('siren')} Alerte 177</button></div>
  <a class="mcall" href="tel:177">${ic('phone')} 177</a>
 </div></header>`;
-document.body.insertAdjacentHTML('afterbegin',strip+head);
+document.body.insertAdjacentHTML('afterbegin',strip+head+'<div class="tri"></div>');
+(function(){const b=document.getElementById('liteBtn');let on=false;try{on=localStorage.getItem('fpn_lite')==='1'}catch(e){}
+ const apply=()=>{document.body.classList.toggle('lite',on);b.setAttribute('aria-pressed',on);b.textContent=on?'Mode économe : activé':'Mode économe en données'};apply();
+ b.onclick=()=>{on=!on;try{localStorage.setItem('fpn_lite',on?'1':'0')}catch(e){}apply();window.toast&&toast(on?'Photos désactivées pour économiser vos données':'Mode normal rétabli')}})();
 
 /* Pied de page */
 const foot=`<footer class="foot"><div class="wrap"><div class="cols">
@@ -74,7 +81,7 @@ const foot=`<footer class="foot"><div class="wrap"><div class="cols">
   <p style="margin-top:14px;font-size:.93rem;max-width:38ch">Au service de la sécurité des personnes et de la protection des biens, dans les neuf provinces du pays. Sous la tutelle du ministère de l’Intérieur, de la Sécurité et de la Décentralisation.</p>
   <p class="f177">${ic('phone')} Urgence : <b>177</b></p></div>
  <div><h4>${ic('file')} Citoyens</h4><a href="demarches.html">Mes démarches</a><a href="suivi.html">Suivre ma demande</a><a href="verifier.html">Vérifier un policier</a><a href="prevention.html">Conseils de prévention</a><a href="commissariats.html">Trouver un commissariat</a></div>
- <div><h4>${ic('shield')} Institution</h4><a href="institution.html">Missions et directions</a><a href="recrutement.html">Recrutement</a><a href="actualites.html">Salle de presse</a><a href="chiffres.html">La sécurité en chiffres</a><a href="contact.html">Contact</a></div>
+ <div><h4>${ic('shield')} Institution</h4><a href="institution.html">Missions et directions</a><a href="recrutement.html">Métiers & recrutement</a><a href="actualites.html">Salle de presse</a><a href="documents.html">Documents & guides</a><a href="chiffres.html">La sécurité en chiffres</a><a href="contact.html">Contact</a></div>
  <div><h4>${ic('lock')} Vous êtes agent ?</h4><div class="agents"><b>Espace agents sécurisé</b><span style="font-size:.88rem">Demandes citoyennes, main courante, ressources humaines, moyens, opérations — par province et par commissariat.</span><br><a class="btn gold sm" href="agents.html">${ic('lock')} Se connecter</a></div></div>
 </div>
 <div class="legal"><span>© 2026 Forces de Police Nationale (FPN) – République gabonaise · Version de démonstration</span><span>Site conçu et développé par <em>Rouana</em></span></div>
@@ -84,10 +91,10 @@ const mainEnd=document.createElement('div');mainEnd.innerHTML=foot;document.body
 /* Barre mobile */
 const tabs=[['index.html','Accueil','home','index'],['demarches.html','Démarches','file','demarches'],null,['commissariats.html','Carte','map','commissariats']];
 const mbar=`<nav class="mbar" aria-label="Navigation mobile">
- ${tabs.map(t=>t?`<a href="${t[0]}" class="${P===t[3]?'on':''}">${ic(t[2])}<span>${t[1]}</span></a>`:`<button class="sos" data-alert aria-label="Alerte 177"><span>177</span>Alerte</button>`).join('')}
+ ${tabs.map(t=>t?`<a href="${t[0]}" class="${P===t[3]?'on':''}">${ic(t[2])}<span>${t[1]}</span></a>`:`<button class="sos" data-alert aria-label="Alerte 177"><span>177</span>Urgence</button>`).join('')}
  <button id="mmenu" aria-label="Menu">${ic('menu')}<span>Menu</span></button></nav>
 <div class="sheet" id="sheet"><div class="in"><div class="grab"></div>
- ${[['suivi.html','Suivre ma demande','search'],['verifier.html','Vérifier un policier','qr'],['institution.html','L’institution','shield'],['prevention.html','Prévention','heart'],['recrutement.html','Recrutement','cap'],['actualites.html','Actualités','news'],['chiffres.html','La sécurité en chiffres','chart'],['contact.html','Contact','mail']].map(m=>`<a class="m" href="${m[0]}">${ic(m[2])}${m[1]}</a>`).join('')}
+ ${[['suivi.html','Suivre ma demande','search'],['verifier.html','Vérifier un policier','qr'],['institution.html','L’institution','shield'],['recrutement.html','Métiers & recrutement','cap'],['prevention.html','Prévention','heart'],['actualites.html','Actualités','news'],['documents.html','Documents & guides','book'],['chiffres.html','La sécurité en chiffres','chart'],['contact.html','Contact','mail']].map(m=>`<a class="m" href="${m[0]}">${ic(m[2])}${m[1]}</a>`).join('')}
  <a class="m agent" href="agents.html">${ic('lock')} Espace agents (connexion)</a></div></div>`;
 document.body.insertAdjacentHTML('beforeend',mbar);
 const sheet=document.getElementById('sheet');
@@ -134,21 +141,23 @@ window.provinceSelects=function(pSel,cSel,opt){
   pSel.onchange=()=>{fill();opt.onchange&&opt.onchange()};cSel.onchange=()=>opt.onchange&&opt.onchange();fill();
 };
 
-/* ---------- Carrousel du commandement ---------- */
-window.mountLeaders=function(el){
+/* ---------- Bandeau défilant d'accueil ---------- */
+window.mountHero=function(el){
   const S=[
-   {img:'assets/img/president.jpg',pos:'center 20%',k:'Chef de l’État',name:'Brice Clotaire Oligui Nguema',role:'Président de la République gabonaise',txt:'Garant de la sécurité des Gabonaises et des Gabonais.'},
-   {img:'assets/img/commandant.jpg',pos:'center 8%',k:'Commandement',name:'Général Serge Hervé Ngoma',role:'Commandant en chef des Forces de Police Nationale',txt:'À la tête des FPN, de la Préfecture de police du Grand Libreville aux commissariats des neuf provinces.'},
-   {img:'assets/img/commandant-salut.jpg',pos:'center 12%',k:'Sur le terrain',name:'Général Serge Hervé Ngoma',role:'Cérémonie officielle des FPN',txt:'Une police engagée, présente et au service de la population.'}
+   {img:'assets/img/president.jpg',pos:'center 22%',k:'Chef de l’État',h:'Brice Clotaire Oligui Nguema',p:'Président de la République gabonaise.',cap:'Photo : Lukasz Kobus / Union européenne, CC BY 4.0',btn:['institution.html','Le commandement']},
+   {img:'assets/img/commandant.jpg',pos:'center 10%',k:'Commandement',h:'Général Serge Hervé Ngoma',p:'Commandant en chef des Forces de Police Nationale, à la tête de la Préfecture de police du Grand Libreville et des commissariats des neuf provinces.',cap:'Photo : miboue.com',btn:['institution.html','Les directions et services']},
+   {img:'assets/img/dotation.jpg',pos:'center',k:'Moyens et équipements',h:'Une police mieux équipée',p:'Le 2 mai 2026, de nouveaux équipements techniques et véhicules ont été remis aux forces de police, dans le cadre de la loi de programmation de la sécurité 2026-2030.',cap:'Cérémonie de remise — presse gabonaise',btn:['actualites.html#n4','Lire l’actualité']},
+   {img:'assets/img/defile.jpg',pos:'center',k:'Forces de Police Nationale',h:'Au service de la population, partout au Gabon',p:'Sécurité des personnes et des biens, prévention, enquête judiciaire, documents d’identité : neuf provinces, une même mission.',cap:'Unités de la Police nationale',btn:['demarches.html','Faire une démarche en ligne']}
   ];
-  el.classList.add('lc');
-  el.innerHTML=`<div class="lc-stage">${S.map((s,i)=>`<figure class="lc-slide ${i?'':'on'}"><div class="arch"><img src="${s.img}" alt="${s.name}" style="object-position:${s.pos}" ${i?'loading="lazy"':''}></div><figcaption><em>${s.k}</em><b>${s.name}</b><span>${s.role}</span><p>${s.txt}</p></figcaption></figure>`).join('')}
-   <figure class="lc-slide lc-urg"><div class="u177">177</div><figcaption><em>Urgence 24 h/24</em><b>Police secours</b><span>Appelez ou alertez en un geste</span><a class="btn red sm" href="tel:177">${ic('phone')} Appeler le 177</a></figcaption></figure></div>
-   <div class="lc-dots">${S.concat([0]).map((_,i)=>`<button class="${i?'':'on'}" aria-label="Voir ${i+1}"></button>`).join('')}</div>`;
-  const sl=[...el.querySelectorAll('.lc-slide')],ds=[...el.querySelectorAll('.lc-dots button')];let k=0,t;
-  const go=n=>{sl[k].classList.remove('on');ds[k].classList.remove('on');k=(n+sl.length)%sl.length;sl[k].classList.add('on');ds[k].classList.add('on')};
-  const run=()=>{clearInterval(t);t=setInterval(()=>go(k+1),6000)};
+  el.className='hs';
+  el.innerHTML='<div class="hs-stage">'+S.map((s,i)=>'<div class="hs-slide'+(i?'':' on')+'"><div class="hs-txt"><em>'+s.k+'</em>'+(i?'<h2>':'<h1>')+s.h+(i?'</h2>':'</h1>')+'<p>'+s.p+'</p><div class="row"><a class="btn red" href="'+s.btn[0]+'">'+s.btn[1]+'</a>'+(i===3?'<button class="btn ghost" data-alert>Alerte 177</button>':'')+'</div></div><div class="hs-img"><img src="'+s.img+'" alt="'+s.h+'" style="object-position:'+s.pos+'"'+(i?' loading="lazy"':'')+'></div></div>').join('')+
+  '<div class="hs-ctl"><div class="wrap"><div class="hs-dots">'+S.map((_,i)=>'<button class="'+(i?'':'on')+'" aria-label="Diapositive '+(i+1)+'"></button>').join('')+'</div><span class="hs-cap" id="hsCap">'+S[0].cap+'</span><div class="hs-arrows"><button aria-label="Précédent">'+ic('back')+'</button><button aria-label="Suivant" style="transform:scaleX(-1)">'+ic('back')+'</button></div></div></div></div>';
+  const sl=[...el.querySelectorAll('.hs-slide')],ds=[...el.querySelectorAll('.hs-dots button')],cap=el.querySelector('#hsCap');let k=0,t;
+  const go=n=>{sl[k].classList.remove('on');ds[k].classList.remove('on');k=(n+sl.length)%sl.length;sl[k].classList.add('on');ds[k].classList.add('on');cap.textContent=S[k].cap};
+  const run=()=>{clearInterval(t);t=setInterval(()=>go(k+1),8000)};
   ds.forEach((b,i)=>b.onclick=()=>{go(i);run()});
+  const ar=el.querySelectorAll('.hs-arrows button');ar[0].onclick=()=>{go(k-1);run()};ar[1].onclick=()=>{go(k+1);run()};
+  el.addEventListener('mouseenter',()=>clearInterval(t));el.addEventListener('mouseleave',run);
   let x0=null;el.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});el.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40){go(k+(dx<0?1:-1));run()}x0=null});
   run();
 };

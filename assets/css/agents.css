@@ -3,7 +3,7 @@
   color-scheme: only light;
   --navy:#0A1B33; --navy2:#0F2A4F; --blue:#17407F; --sky:#2F6FD0;
   --gold:#E0A91B; --gold2:#F3C84B; --green:#0F8F4F;
-  --alert:#EA580C; --alert2:#C2410C; --alert-soft:#ffedd8; --alert-ink:#9a3412;
+  --alert:#B58500; --alert2:#8A6500; --alert-soft:#fff3cf; --alert-ink:#6b4e00;
   --bg:#F2F5FA; --card:#fff; --ink:#0F1B2D; --muted:#5B6B82; --line:#E1E7F0;
   --r:16px; --shadow:0 10px 30px rgba(10,27,51,.10); --shadow2:0 4px 14px rgba(10,27,51,.07);
   --head:'Sora','Plus Jakarta Sans',system-ui,sans-serif; --body:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
@@ -66,7 +66,7 @@ input[type=checkbox]{width:20px;height:20px;min-height:0;padding:0;accent-color:
 .lg-card form{padding:26px 28px 28px}
 .demo-ban{background:linear-gradient(90deg,#fff4d1,#ffe9a8);color:#6b4a00;font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;padding:9px 20px;display:flex;align-items:center;gap:9px;border-bottom:1px solid #f1d98a}
 .demo-ban .dot{width:9px;height:9px;border-radius:50%;background:var(--alert);animation:pulse 1.8s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(234,88,12,.6)}100%{box-shadow:0 0 0 9px rgba(234,88,12,0)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(181,133,0,.6)}100%{box-shadow:0 0 0 9px rgba(181,133,0,0)}}
 .lg-card h2{font-size:1.4rem;margin-bottom:4px}
 .lg-step{color:var(--muted);font-size:.84rem;font-weight:600;margin-bottom:18px}
 .lg-help{color:var(--muted);font-size:.9rem;margin:-6px 0 14px}

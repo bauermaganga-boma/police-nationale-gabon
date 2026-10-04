@@ -8,7 +8,6 @@
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/site-v2.css">
 </head>
 <body data-page="verifier" data-title="Vérifier un policier">
 <main>
@@ -26,7 +25,7 @@
 <script>
 const $=id=>document.getElementById(id);$('qi').innerHTML=icon('qr');
 function show(a){
- if(!a){$('res').innerHTML='<div class="card" style="border-color:#fdba74;background:#fff7ed"><h3 style="color:var(--alert)">⚠ Code non reconnu</h3><p>Ce code ne correspond à aucun agent. Ne remettez ni argent ni document, et appelez le <a href="tel:177"><b>177</b></a> pour signaler une personne se faisant passer pour un policier.</p></div>';return}
+ if(!a){$('res').innerHTML='<div class="card" style="border-color:#ecd78a;background:#fff8e1"><h3 style="color:var(--gold-d)">⚠ Code non reconnu</h3><p>Ce code ne correspond à aucun agent. Ne remettez ni argent ni document, et appelez le <a href="tel:177"><b>177</b></a> pour signaler une personne se faisant passer pour un policier.</p></div>';return}
  $('res').innerHTML=`<div class="card" style="border-color:#9bdcb8"><div class="person" style="border:0;padding:0;margin-bottom:14px"><div class="av">${a.prenom[0]}${a.nom[0]}</div><div><b>${FPN.esc(a.prenom)} ${FPN.esc(a.nom)}</b><span>${a.grade} · ${a.service}</span></div></div><span class="pill s4">✔ Agent authentique · ${a.statut}</span><p style="margin:14px 0 6px;font-size:.92rem;color:var(--muted)">Affectation : ${FPN.esc(FPN.commissariat(a.commissariat).nom)}<br>Code carte : ${a.badge}</p><p style="font-size:.8rem;color:var(--muted)">Agent fictif de démonstration. Après l’intervention, vous pourrez donner votre avis (fonction en production).</p></div>`;
 }
 $('f').onsubmit=e=>{e.preventDefault();show(FPN.verifyBadge($('c').value))};
