@@ -78,7 +78,7 @@ const foot=`<footer class="foot"><div class="wrap"><div class="cols">
  <div><h4>${ic('lock')} Vous êtes agent ?</h4><div class="agents"><b>Espace agents sécurisé</b><span style="font-size:.88rem">Demandes citoyennes, main courante, ressources humaines, moyens, opérations — par province et par commissariat.</span><br><a class="btn gold sm" href="agents.html">${ic('lock')} Se connecter</a></div></div>
 </div>
 <div class="legal"><span>© 2026 Forces de Police Nationale (FPN) – République gabonaise · Version de démonstration</span><span>Site conçu et développé par <em>Rouana</em></span></div>
-<p class="credits">Crédits photo : Président de la République — U.S. Department of State (domaine public) · Commandant en chef — miboue.com · Opérations — presse gabonaise. Droits de réutilisation à confirmer avant mise en production.</p></div></footer>`;
+<p class="credits">Crédits photo : Président de la République — Lukasz Kobus / Union européenne, CC BY 4.0 (Wikimedia Commons) · Commandant en chef — miboue.com · Opérations — presse gabonaise. Droits de réutilisation à confirmer avant mise en production.</p></div></footer>`;
 const mainEnd=document.createElement('div');mainEnd.innerHTML=foot;document.body.appendChild(mainEnd.firstChild);
 
 /* Barre mobile */
@@ -137,7 +137,7 @@ window.provinceSelects=function(pSel,cSel,opt){
 /* ---------- Carrousel du commandement ---------- */
 window.mountLeaders=function(el){
   const S=[
-   {img:'assets/img/president.jpg',pos:'center 12%',k:'Chef de l’État',name:'Brice Clotaire Oligui Nguema',role:'Président de la République gabonaise',txt:'Garant de la sécurité des Gabonaises et des Gabonais.'},
+   {img:'assets/img/president.jpg',pos:'center 20%',k:'Chef de l’État',name:'Brice Clotaire Oligui Nguema',role:'Président de la République gabonaise',txt:'Garant de la sécurité des Gabonaises et des Gabonais.'},
    {img:'assets/img/commandant.jpg',pos:'center 8%',k:'Commandement',name:'Général Serge Hervé Ngoma',role:'Commandant en chef des Forces de Police Nationale',txt:'À la tête des FPN, de la Préfecture de police du Grand Libreville aux commissariats des neuf provinces.'},
    {img:'assets/img/commandant-salut.jpg',pos:'center 12%',k:'Sur le terrain',name:'Général Serge Hervé Ngoma',role:'Cérémonie officielle des FPN',txt:'Une police engagée, présente et au service de la population.'}
   ];
