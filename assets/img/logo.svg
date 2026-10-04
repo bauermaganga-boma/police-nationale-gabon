@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" role="img" aria-label="Emblème">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17407F"/><stop offset="1" stop-color="#0A1B33"/></linearGradient>
+<clipPath id="c"><path d="M60 6 108 22v50c0 32-20 52-48 62C32 124 12 104 12 72V22z"/></clipPath></defs>
+<path d="M60 2 112 19v53c0 35-22 56-52 67C30 128 8 107 8 72V19z" fill="#E0A91B"/>
+<path d="M60 8 106 23v49c0 31-19 50-46 60C33 122 14 103 14 72V23z" fill="url(#g)"/>
+<g clip-path="url(#c)"><rect x="0" y="92" width="120" height="14" fill="#0F8F4F"/><rect x="0" y="106" width="120" height="14" fill="#E0A91B"/><rect x="0" y="120" width="120" height="20" fill="#2A5DB0"/></g>
+<path d="M60 26l7.4 15.2 16.6 2.3-12 11.7 2.9 16.5L60 63.800 45.100 71.700 48 55.200 36 43.500l16.600-2.300z" fill="#E0A91B"/>
+<path d="M30 60c-4 14 2 26 14 31M90 60c4 14-2 26-14 31" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="3" stroke-linecap="round"/>
+</svg>

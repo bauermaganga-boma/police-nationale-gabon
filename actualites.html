@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Actualités – Police nationale du Gabon</title>
+<meta name="theme-color" content="#0A1B33"><meta name="color-scheme" content="only light">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="actualites" data-title="Actualités">
+<main>
+<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Actualités</div><h1>Salle de presse</h1><p>Communiqués et actualités officielles : opérations, équipements, nominations. La source à privilégier contre les fausses informations.</p></div></section>
+<section class="s" style="padding-top:36px"><div class="wrap">
+ <div class="tabs" id="tabs"></div>
+ <div class="grid3" id="grid" style="margin-top:10px"></div>
+</div></section>
+</main>
+<div class="modal" id="m"><div class="mbox lg art"><button class="x" aria-label="Fermer">×</button><div id="mc"></div></div></div>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/layout.js"></script>
+<script>
+const tags=['Toutes',...new Set(NEWS.map(n=>n.tag))];let cur='Toutes';
+function draw(){
+ document.getElementById('tabs').innerHTML=tags.map(t=>`<button class="${t===cur?'on':''}" data-t="${t}">${t}</button>`).join('');
+ document.getElementById('grid').innerHTML=NEWS.filter(n=>cur==='Toutes'||n.tag===cur).map(n=>`<button class="nw" data-id="${n.id}"><div class="im" style="background-image:url(${n.img});background-position:${n.pos||'center'}"><b>${n.tag}</b></div><div class="tx"><time>${fmtDate(n.date)}</time><h3>${n.title}</h3><p>${n.ex}</p><span class="more">Lire →</span></div></button>`).join('');
+}
+function open(id){const n=NEWS.find(x=>x.id===id);if(!n)return;
+ document.getElementById('mc').innerHTML=`<span class="pill s1">${n.tag}</span> <small style="color:var(--muted)">${fmtDate(n.date)}</small><h2 style="margin-top:8px">${n.title}</h2><img src="${n.img}" alt="" style="max-height:340px;object-fit:cover;object-position:${n.pos||'center'}">${n.body}<h4 style="margin-top:18px">Sources</h4><ul>${n.src.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener" style="color:var(--blue)">${s[0]}</a></li>`).join('')}</ul><p style="font-size:.8rem;color:var(--muted)">Illustration : image de démonstration, droits de réutilisation à confirmer.</p>`;
+ document.getElementById('m').classList.add('on');history.replaceState(null,'','#'+id)}
+document.getElementById('tabs').onclick=e=>{const b=e.target.closest('button');if(b){cur=b.dataset.t;draw()}};
+document.getElementById('grid').onclick=e=>{const b=e.target.closest('.nw');if(b)open(b.dataset.id)};
+document.querySelector('#m .x').onclick=()=>document.getElementById('m').classList.remove('on');
+document.getElementById('m').onclick=e=>{if(e.target.id==='m')e.target.classList.remove('on')};
+draw();if(location.hash)open(location.hash.slice(1));
+</script>
+</body>
+</html>

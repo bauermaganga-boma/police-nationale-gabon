@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Prévention – Police nationale du Gabon</title>
+<meta name="theme-color" content="#0A1B33"><meta name="color-scheme" content="only light">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="prevention" data-title="Prévention">
+<main>
+<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Prévention</div><h1>Conseils de prévention</h1><p>Quelques réflexes simples pour protéger vos proches, vos biens et votre argent.</p></div></section>
+<section class="s" style="padding-top:40px"><div class="wrap">
+ <div class="tabs" id="tabs"></div>
+ <div id="body" class="grid2" style="margin-top:8px;align-items:start"></div>
+ <div class="banner reveal" style="margin-top:44px"><div><h3>Victime ou témoin ?</h3><p>Signalez les faits en ligne, de façon anonyme si vous le souhaitez, ou appelez le 177.</p></div><a class="btn gold" href="demarches.html#anonyme">Faire un signalement</a></div>
+</div></section>
+</main>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/layout.js"></script>
+<script>
+const T={
+ 'Mobile Money & arnaques':{i:'phone',t:[
+  ['Ne communiquez jamais votre code PIN','Aucun agent d’opérateur ni de la police ne vous le demandera, ni par appel, ni par SMS.'],
+  ['Méfiez-vous des « gains » et faux transferts','Un message annonçant un gain ou un envoi d’argent « par erreur » est souvent le début d’une arnaque.'],
+  ['Vérifiez avant de payer','Pour un achat en ligne, privilégiez la remise en main propre ou un vendeur connu.'],
+  ['Signalez-le','En cas d’arnaque, conservez les messages et déposez un signalement cyber.']]},
+ 'Réseaux sociaux':{i:'globe',t:[
+  ['Verrouillez vos comptes','Utilisez des mots de passe longs et différents, et activez la double vérification.'],
+  ['Attention aux photos et aux chantages','Ne partagez jamais d’images intimes. En cas de chantage, ne payez pas : conservez les preuves et signalez.'],
+  ['Protégez vos enfants','Paramétrez les comptes en privé et dialoguez régulièrement sur ce qu’ils voient en ligne.'],
+  ['Vérifiez avant de relayer','Les fausses informations circulent vite : consultez les communiqués officiels.']]},
+ 'Domicile':{i:'home',t:[
+  ['Ne laissez pas de signes d’absence','Courrier accumulé, volets fermés en journée : demandez à un voisin de passer.'],
+  ['Éclairez et verrouillez','Un bon éclairage extérieur et une serrure solide dissuadent la plupart des cambriolages.'],
+  ['Marquez vos objets de valeur','Notez les numéros de série (téléphone, ordinateur, moto) : utile en cas de vol.'],
+  ['Voisinage vigilant','Échangez vos numéros et signalez toute présence suspecte.']]},
+ 'Enfants & familles':{i:'heart',t:[
+  ['Sur le chemin de l’école','Apprenez à vos enfants leur adresse, votre numéro, et à ne suivre aucun inconnu.'],
+  ['Violences : parlez','Les violences faites aux femmes et aux mineurs peuvent être signalées discrètement. Vous n’êtes pas seul(e).'],
+  ['Écoutez-les','Un enfant qui change de comportement a peut-être besoin d’en parler.'],
+  ['Numéro d’urgence','En cas de danger immédiat, composez le 177.']]},
+ 'Voyage & route':{i:'car',t:[
+  ['Gardez vos documents sur vous','Pièce d’identité et papiers du véhicule à portée de main.'],
+  ['Contrôles','Un agent doit pouvoir justifier de son identité. Vous pouvez vérifier sa carte.'],
+  ['Ne conduisez pas fatigué','Faites des pauses toutes les deux heures sur les longs trajets.'],
+  ['Phares et visibilité','De nuit ou sous la pluie, roulez à vitesse adaptée.']]}
+};
+const K=Object.keys(T);let cur=K[0];
+function draw(){
+ document.getElementById('tabs').innerHTML=K.map(k=>`<button class="${k===cur?'on':''}" data-k="${k}">${icon(T[k].i)} ${k}</button>`).join('');
+ document.getElementById('body').innerHTML=T[cur].t.map(x=>`<div class="card tip"><div class="ib">${icon('check')}</div><div><h3>${x[0]}</h3><p>${x[1]}</p></div></div>`).join('');
+}
+document.getElementById('tabs').onclick=e=>{const b=e.target.closest('button');if(b){cur=b.dataset.k;draw()}};draw();
+</script>
+</body>
+</html>

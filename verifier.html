@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vérifier un policier – Police nationale du Gabon</title>
+<meta name="theme-color" content="#0A1B33"><meta name="color-scheme" content="only light">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="verifier" data-title="Vérifier un policier">
+<main>
+<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Vérifier un policier</div><h1>Vérifier un policier</h1><p>Un doute sur un contrôle ? Scannez le QR code de la carte professionnelle ou saisissez son code pour confirmer l’identité et le service de l’agent.</p></div></section>
+<section class="s" style="padding-top:36px"><div class="wrap" style="max-width:860px">
+ <div class="grid2" style="align-items:start">
+  <form class="card form" id="f"><h3>Saisir le code de la carte</h3><div class="fld"><label for="c">Code (ex. FPN-4800)</label><input id="c" placeholder="FPN-0000" autocomplete="off" style="font-family:var(--head);font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase"></div><button class="btn navy block">Vérifier</button><button type="button" class="btn line block" id="scan">📷 Scanner le QR code (démo)</button><small style="color:var(--muted)">Démonstration : le code d’un agent fictif est rempli automatiquement lors du scan.</small></form>
+  <div id="res"><div class="card" style="text-align:center;color:var(--muted)"><div class="ib" style="margin:0 auto 14px" id="qi"></div>Le résultat apparaîtra ici.</div></div>
+ </div>
+ <div class="warn" style="margin-top:24px"><b>Vos droits :</b> en cas de contrôle, vous pouvez demander à voir la carte professionnelle de l’agent. Un policier authentique ne demandera jamais d’argent pour « régler » une situation. En cas de doute, appelez le <b>177</b>.</div>
+</div></section>
+</main>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/layout.js"></script>
+<script>
+const $=id=>document.getElementById(id);$('qi').innerHTML=icon('qr');
+function show(a){
+ if(!a){$('res').innerHTML='<div class="card" style="border-color:#f3b3ba;background:#fff5f6"><h3 style="color:var(--red)">⚠ Code non reconnu</h3><p>Ce code ne correspond à aucun agent. Ne remettez ni argent ni document, et appelez le <a href="tel:177"><b>177</b></a> pour signaler une personne se faisant passer pour un policier.</p></div>';return}
+ $('res').innerHTML=`<div class="card" style="border-color:#9bdcb8"><div class="person" style="border:0;padding:0;margin-bottom:14px"><div class="av">${a.prenom[0]}${a.nom[0]}</div><div><b>${FPN.esc(a.prenom)} ${FPN.esc(a.nom)}</b><span>${a.grade} · ${a.service}</span></div></div><span class="pill s4">✔ Agent authentique · ${a.statut}</span><p style="margin:14px 0 6px;font-size:.92rem;color:var(--muted)">Affectation : ${FPN.esc(FPN.commissariat(a.commissariat).nom)}<br>Code carte : ${a.badge}</p><p style="font-size:.8rem;color:var(--muted)">Agent fictif de démonstration. Après l’intervention, vous pourrez donner votre avis (fonction en production).</p></div>`;
+}
+$('f').onsubmit=e=>{e.preventDefault();show(FPN.verifyBadge($('c').value))};
+$('scan').onclick=()=>{const a=FPN.db().agents[3];$('c').value=a.badge;show(a);toast('QR code lu')};
+</script>
+</body>
+</html>

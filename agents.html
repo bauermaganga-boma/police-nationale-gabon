@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1B33">
+<title>Espace Agents – Police nationale du Gabon</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="assets/css/agents.css">
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<!-- ============ CONNEXION ============ -->
+<section id="login" class="lg" aria-label="Connexion à l’espace agents">
+  <div class="lg-brand">
+    <a class="lg-back" href="index.html">&larr; Retour au site public</a>
+    <div class="lg-hero">
+      <img class="lg-logo" src="assets/img/logo.svg" alt="Emblème de la Police nationale du Gabon">
+      <p class="lg-kicker">République gabonaise · Union – Travail – Justice</p>
+      <h1>Espace Agents</h1>
+      <p class="lg-lead">Plateforme interne de la Police nationale : demandes citoyennes, alertes 177, main courante, ressources humaines, moyens et opérations.</p>
+      <ul class="lg-points">
+        <li><b>Accès nominatif</b><span>Chaque agent dispose d’un compte personnel et d’une double authentification.</span></li>
+        <li><b>Toutes les actions sont journalisées</b><span>Consultations, modifications et exports sont tracés et auditables.</span></li>
+        <li><b>Hébergement souverain</b><span>Données hébergées sur le territoire national, sous contrôle de l’institution.</span></li>
+      </ul>
+    </div>
+    <div class="tri" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+
+  <div class="lg-main">
+    <div class="lg-card">
+      <div class="demo-ban"><span class="dot"></span> Version de démonstration</div>
+
+      <form id="f1" novalidate autocomplete="off">
+        <h2>Connexion sécurisée</h2>
+        <p class="lg-step">Étape 1 sur 2 · Identification</p>
+        <div class="fld"><label for="mat">Matricule</label><input id="mat" name="mat" type="text" autocomplete="username" autocapitalize="characters" spellcheck="false" placeholder="ex. AGT-232" required></div>
+        <div class="fld"><label for="pwd">Mot de passe</label>
+          <div class="pw"><input id="pwd" name="pwd" type="password" autocomplete="current-password" placeholder="••••••••" required><button type="button" id="pwToggle" class="pw-t" aria-label="Afficher le mot de passe">Afficher</button></div></div>
+        <p class="err" id="e1" role="alert" hidden></p>
+        <button class="btn gold block" type="submit">Continuer</button>
+      </form>
+
+      <form id="f2" novalidate hidden autocomplete="off">
+        <h2>Vérification en deux étapes</h2>
+        <p class="lg-step">Étape 2 sur 2 · Code de vérification</p>
+        <p class="lg-help">Saisissez le code à 6 chiffres généré par l’application d’authentification de l’agent.</p>
+        <div class="fld"><label for="code">Code de vérification</label><input id="code" name="code" class="code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" placeholder="000000" required></div>
+        <p class="err" id="e2" role="alert" hidden></p>
+        <button class="btn gold block" type="submit">Vérifier et accéder</button>
+        <button class="btn line block" type="button" id="f2back">Modifier le matricule</button>
+      </form>
+    </div>
+
+    <div class="demo-box">
+      <h3>Comptes de démonstration</h3>
+      <p>Mot de passe <code>demo2026</code> · code de vérification <code>123456</code>. Choisissez un profil pour entrer en un clic.</p>
+      <div class="demo-grid" id="demoBtns"></div>
+    </div>
+    <p class="lg-foot">Données fictives de démonstration · Aucune donnée réelle n’est traitée.</p>
+  </div>
+</section>
+
+<!-- ============ APPLICATION ============ -->
+<div id="app" hidden>
+  <aside class="side" id="side" aria-label="Navigation principale">
+    <a class="side-brand" href="index.html" title="Retour au site public">
+      <img src="assets/img/logo.svg" alt="">
+      <span><b>Police nationale</b><small>Espace Agents</small></span>
+    </a>
+    <nav id="sideNav" class="side-nav"></nav>
+    <div class="side-foot">
+      <div class="side-user" id="sideUser"></div>
+      <button class="side-out" type="button" data-out></button>
+    </div>
+  </aside>
+
+  <header class="top" id="top">
+    <button class="tb-btn tb-left" id="tbLeft" type="button"></button>
+    <h1 class="tb-title" id="tbTitle"></h1>
+    <div class="tb-user" id="tbUser"></div>
+    <a class="tb-btn tb-site" href="index.html" aria-label="Retour au site public"></a>
+    <button class="tb-btn tb-out" type="button" data-out></button>
+  </header>
+
+  <main id="main" tabindex="-1"></main>
+
+  <nav class="bnav" id="bnav" aria-label="Navigation mobile"></nav>
+
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Tous les modules" aria-hidden="true">
+    <div class="sheet-card">
+      <div class="sheet-h"><b>Tous les modules</b><button type="button" class="x" id="sheetClose" aria-label="Fermer">&times;</button></div>
+      <div id="sheetList" class="sheet-list"></div>
+    </div>
+  </div>
+
+  <div id="scrim"></div>
+
+  <aside id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+    <div class="dr-h">
+      <button type="button" class="dr-back" id="drawerClose"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Retour</span></button>
+      <h2 id="drawerTitle"></h2>
+    </div>
+    <div class="dr-b" id="drawerBody"></div>
+  </aside>
+
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="md-card" id="modalCard">
+      <div class="md-h"><h2 id="modalTitle"></h2><button type="button" class="x" id="modalClose" aria-label="Fermer">&times;</button></div>
+      <div class="md-b" id="modalBody"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/agents.js"></script>
+</body>
+</html>

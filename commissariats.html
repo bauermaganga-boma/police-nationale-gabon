@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Trouver un commissariat – Police nationale du Gabon</title>
+<meta name="theme-color" content="#0A1B33"><meta name="color-scheme" content="only light">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="commissariats" data-title="Commissariats">
+<main>
+<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Commissariats</div><h1>Trouver un commissariat</h1><p>Localisez le commissariat ou le poste de police le plus proche, consultez ses horaires et appelez-le en un geste.</p></div></section>
+<section class="s" style="padding-top:36px"><div class="wrap">
+ <div class="info" style="margin-bottom:18px">Liste de démonstration : adresses, positions et horaires à confirmer avec les directions avant mise en production.</div>
+ <div class="cmap">
+  <div class="clist"><input id="q" type="search" placeholder="Rechercher une ville, un quartier…" aria-label="Rechercher"><button class="btn navy sm" id="near" style="width:100%">📍 Autour de moi</button><div id="list" style="display:flex;flex-direction:column;gap:10px"></div></div>
+  <div id="map"><div class="map-fallback">Chargement de la carte…</div></div>
+ </div>
+</div></section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/layout.js"></script>
+<script>
+const $=id=>document.getElementById(id);let map,markers={},C=FPN.COMMISSARIATS,me=null;
+const km=(a,b)=>{const R=6371,t=x=>x*Math.PI/180,dl=t(b.lat-a.lat),dg=t(b.lng-a.lng);const h=Math.sin(dl/2)**2+Math.cos(t(a.lat))*Math.cos(t(b.lat))*Math.sin(dg/2)**2;return 2*R*Math.asin(Math.sqrt(h))};
+function list(){
+  const q=$('q').value.toLowerCase();let L=C.filter(c=>(c.nom+c.ville).toLowerCase().includes(q));
+  if(me){L=L.map(c=>({...c,d:km(me,c)})).sort((a,b)=>a.d-b.d)}
+  $('list').innerHTML=L.map(c=>`<button class="ci" data-id="${c.id}"><b>${c.nom}</b><span>${c.ville} · ${c.h}</span><span>📞 ${c.tel}${c.d!=null?' · '+c.d.toFixed(1)+' km':''}</span><span class="tg">${c.type}</span></button>`).join('')||'<p style="color:var(--muted);padding:10px">Aucun résultat.</p>';
+}
+function focus(id){const c=C.find(x=>x.id===id);if(!c||!map)return;map.flyTo([c.lat,c.lng],14,{duration:.8});markers[id]&&markers[id].openPopup();document.querySelectorAll('.ci').forEach(e=>e.classList.toggle('on',e.dataset.id===id))}
+$('list').onclick=e=>{const b=e.target.closest('.ci');if(b)focus(b.dataset.id)};
+$('q').oninput=list;list();
+$('near').onclick=()=>{if(!navigator.geolocation)return toast('Localisation indisponible');navigator.geolocation.getCurrentPosition(p=>{me={lat:p.coords.latitude,lng:p.coords.longitude};list();if(map)L.circleMarker([me.lat,me.lng],{radius:8,color:'#fff',weight:3,fillColor:'#2F6FD0',fillOpacity:1}).addTo(map).bindPopup('Vous êtes ici');const f=$('list').querySelector('.ci');f&&focus(f.dataset.id)},()=>toast('Position refusée ou indisponible'))};
+if(window.L){
+  map=L.map('map',{scrollWheelZoom:false}).setView([0.40,9.47],11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
+  const ic=L.divIcon({className:'',html:'<div style="width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#17407F;border:3px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.35);display:grid;place-items:center"><i style="width:8px;height:8px;border-radius:50%;background:#E0A91B"></i></div>',iconSize:[30,30],iconAnchor:[15,30],popupAnchor:[0,-28]});
+  C.forEach(c=>{markers[c.id]=L.marker([c.lat,c.lng],{icon:ic}).addTo(map).bindPopup(`<b>${c.nom}</b><br>${c.h}<br><a href="tel:${c.tel}">📞 ${c.tel}</a> · <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}">Itinéraire</a>`)});
+  map.on('click',()=>map.scrollWheelZoom.enable());
+}else $('map').innerHTML='<div class="map-fallback">La carte nécessite une connexion internet. Utilisez la liste pour consulter les contacts.</div>';
+</script>
+</body>
+</html>
