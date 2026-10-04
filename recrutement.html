@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Recrutement – Police nationale du Gabon</title>
+<title>Recrutement – Forces de Police Nationale (FPN)</title>
 <meta name="theme-color" content="#0A1B33"><meta name="color-scheme" content="only light">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site-v2.css">
 </head>
 <body data-page="recrutement" data-title="Recrutement">
 <main>
-<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Recrutement</div><h1>Rejoindre la Police nationale</h1><p>Devenez acteur de la sécurité de vos concitoyens. Conditions, calendrier et inscription en ligne aux concours.</p></div></section>
+<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Recrutement</div><h1><span class="ph-ic" data-i="cap"></span>Rejoindre la Police nationale</h1><p>Devenez acteur de la sécurité de vos concitoyens. Conditions, calendrier et inscription en ligne aux concours.</p></div></section>
 <section class="s" style="padding-top:36px"><div class="wrap">
  <div class="warn" style="margin-bottom:28px"><b>Attention aux faux concours.</b> Seuls les communiqués publiés sur ce site et les canaux officiels font foi. L’inscription est <b>gratuite</b> : ne versez jamais d’argent à un intermédiaire promettant une place.</div>
  <div class="grid3" style="margin-bottom:44px">
@@ -25,7 +26,8 @@
     <div class="row2"><div class="fld"><label>Nom <i>*</i></label><input name="nom" required autocomplete="family-name"></div><div class="fld"><label>Prénom <i>*</i></label><input name="prenom" required autocomplete="given-name"></div></div>
     <div class="row2"><div class="fld"><label>Date de naissance <i>*</i></label><input type="date" name="naissance" required></div><div class="fld"><label>Téléphone <i>*</i></label><input type="tel" name="tel" required inputmode="tel" autocomplete="tel"></div></div>
     <div class="row2"><div class="fld"><label>Concours <i>*</i></label><select name="concours"><option>Gardien de la paix</option><option>Officier de police (exemple)</option></select></div><div class="fld"><label>Dernier diplôme <i>*</i></label><select name="diplome"><option>BEPC</option><option>Baccalauréat</option><option>Licence</option><option>Master</option></select></div></div>
-    <div class="fld"><label>E-mail (facultatif)</label><input type="email" name="email"></div>
+    <div class="row2"><div class="fld"><label>Province de résidence <i>*</i></label><select name="province" id="rp" required></select></div><div class="fld"><label>E-mail (facultatif)</label><input type="email" name="email"></div></div>
+    <div data-attach data-label="Joindre votre dossier : diplôme, acte de naissance, pièce d’identité, photo…"></div>
     <label class="chk"><input type="checkbox" required> Je certifie l’exactitude des informations et je sais que l’inscription est gratuite.</label>
     <button class="btn red block">Envoyer ma candidature</button>
    </form></div>
@@ -36,10 +38,11 @@
 <script src="assets/js/store.js"></script>
 <script src="assets/js/layout.js"></script>
 <script>
-document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=icon(e.dataset.i));
-document.getElementById('f').onsubmit=e=>{e.preventDefault();const f=e.target;if(!f.reportValidity())return;const d=Object.fromEntries(new FormData(f).entries());
- d.nom=d.nom.toUpperCase();const c=FPN.addCandidate(d);
- document.getElementById('box').innerHTML=`<div class="done"><div class="ok">${icon('check')}</div><h2>Candidature enregistrée</h2><p style="color:var(--muted)">Votre dossier a bien été reçu. Convocation à venir.</p><div class="numb">${c.id}</div><p style="font-size:.9rem;color:var(--muted)">Conservez ce numéro de candidat.</p></div>`};
+const rp=document.getElementById('rp');rp.innerHTML='<option value="">Choisir…</option>'+FPN.PROVINCES.map(p=>`<option value="${p.id}">${p.nom}</option>`).join('');
+initAttach();
+document.getElementById('f').onsubmit=async e=>{e.preventDefault();const f=e.target;if(!f.reportValidity())return;const d=Object.fromEntries(new FormData(f).entries());
+ d.nom=d.nom.toUpperCase();d.files=await f.querySelector('[data-attach]')._att.read();const c=FPN.addCandidate(d);
+ document.getElementById('box').innerHTML=`<div class="done"><div class="ok">${icon('check')}</div><h2>Candidature enregistrée</h2><p style="color:var(--muted)">Votre dossier a bien été reçu${d.files.length?' avec '+d.files.length+' pièce'+(d.files.length>1?'s':'')+' jointe'+(d.files.length>1?'s':''):''}. Convocation à venir.</p><div class="numb">${c.id}</div><p style="font-size:.9rem;color:var(--muted)">Conservez ce numéro de candidat.</p></div>`};
 </script>
 </body>
 </html>

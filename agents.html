@@ -6,13 +6,15 @@
 <meta name="color-scheme" content="only light">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0A1B33">
-<title>Espace Agents – Police nationale du Gabon</title>
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<title>Espace Agents – Forces de Police Nationale (FPN)</title>
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="assets/css/agents.css">
+<link rel="stylesheet" href="assets/css/agents-2.css">
+<link rel="stylesheet" href="assets/css/agents-3.css">
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -22,14 +24,14 @@
   <div class="lg-brand">
     <a class="lg-back" href="index.html">&larr; Retour au site public</a>
     <div class="lg-hero">
-      <img class="lg-logo" src="assets/img/logo.svg" alt="Emblème de la Police nationale du Gabon">
+      <img class="lg-logo" src="assets/img/logo.png" width="400" height="400" alt="Écusson des Forces de Police Nationale (FPN)">
       <p class="lg-kicker">République gabonaise · Union – Travail – Justice</p>
       <h1>Espace Agents</h1>
-      <p class="lg-lead">Plateforme interne de la Police nationale : demandes citoyennes, alertes 177, main courante, ressources humaines, moyens et opérations.</p>
+      <p class="lg-lead">Plateforme interne des Forces de Police Nationale (FPN) : demandes citoyennes, alertes 177, main courante, ressources humaines, moyens, opérations et notes de service, par province et par commissariat.</p>
       <ul class="lg-points">
         <li><b>Accès nominatif</b><span>Chaque agent dispose d’un compte personnel et d’une double authentification.</span></li>
+        <li><b>Chaque agent voit son périmètre</b><span>Pays, province ou commissariat : la portée de chaque compte est verrouillée.</span></li>
         <li><b>Toutes les actions sont journalisées</b><span>Consultations, modifications et exports sont tracés et auditables.</span></li>
-        <li><b>Hébergement souverain</b><span>Données hébergées sur le territoire national, sous contrôle de l’institution.</span></li>
       </ul>
     </div>
     <div class="tri" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -73,12 +75,12 @@
 <div id="app" hidden>
   <aside class="side" id="side" aria-label="Navigation principale">
     <a class="side-brand" href="index.html" title="Retour au site public">
-      <img src="assets/img/logo.svg" alt="">
-      <span><b>Police nationale</b><small>Espace Agents</small></span>
+      <img src="assets/img/logo.png" width="400" height="400" alt="">
+      <span><b>Forces de Police Nationale</b><small>FPN · Espace Agents</small></span>
     </a>
     <nav id="sideNav" class="side-nav"></nav>
     <div class="side-foot">
-      <div class="side-user" id="sideUser"></div>
+      <button class="side-user" id="sideUser" type="button" aria-label="Ouvrir mon profil"></button>
       <button class="side-out" type="button" data-out></button>
     </div>
   </aside>
@@ -86,10 +88,16 @@
   <header class="top" id="top">
     <button class="tb-btn tb-left" id="tbLeft" type="button"></button>
     <h1 class="tb-title" id="tbTitle"></h1>
-    <div class="tb-user" id="tbUser"></div>
+    <button class="tb-btn tb-ico tb-bell" id="tbBell" type="button" aria-haspopup="dialog" aria-label="Notifications"></button>
+    <button class="tb-user" id="tbUser" type="button" aria-haspopup="dialog" aria-label="Mon profil"></button>
     <a class="tb-btn tb-site" href="index.html" aria-label="Retour au site public"></a>
     <button class="tb-btn tb-out" type="button" data-out></button>
   </header>
+
+  <div class="ctx" id="ctx">
+    <button class="scope-btn" id="scopeBtn" type="button" aria-haspopup="dialog" aria-label="Changer la portée"></button>
+    <button class="srch-btn" id="srchBtn" type="button" aria-haspopup="dialog" aria-label="Recherche globale"></button>
+  </div>
 
   <main id="main" tabindex="-1"></main>
 
@@ -99,6 +107,17 @@
     <div class="sheet-card">
       <div class="sheet-h"><b>Tous les modules</b><button type="button" class="x" id="sheetClose" aria-label="Fermer">&times;</button></div>
       <div id="sheetList" class="sheet-list"></div>
+    </div>
+  </div>
+
+  <div id="panelScrim"></div>
+  <div id="panel" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Panneau"></div>
+
+  <div id="cmdk" role="dialog" aria-modal="true" aria-label="Recherche globale" aria-hidden="true">
+    <div class="ck-card">
+      <div class="ck-in"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg><input id="ckQ" type="search" placeholder="Rechercher une demande, un agent, un véhicule, une opération…" autocomplete="off" aria-label="Recherche globale"><button type="button" class="x" id="ckX" aria-label="Fermer">&times;</button></div>
+      <div id="ckL" class="ck-list" role="listbox"></div>
+      <div class="ck-foot"><span><kbd>↑</kbd><kbd>↓</kbd> naviguer</span><span><kbd>Entrée</kbd> ouvrir</span><span><kbd>Échap</kbd> fermer</span></div>
     </div>
   </div>
 
@@ -124,6 +143,21 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="assets/js/store.js"></script>
-<script src="assets/js/agents.js"></script>
+<script src="assets/js/agents/core.js"></script>
+<script src="assets/js/agents/files.js"></script>
+<script src="assets/js/agents/tools.js"></script>
+<script src="assets/js/agents/dashboard.js"></script>
+<script src="assets/js/agents/demandes-detail.js"></script>
+<script src="assets/js/agents/demandes.js"></script>
+<script src="assets/js/agents/alertes.js"></script>
+<script src="assets/js/agents/courante.js"></script>
+<script src="assets/js/agents/rh.js"></script>
+<script src="assets/js/agents/moyens.js"></script>
+<script src="assets/js/agents/ops.js"></script>
+<script src="assets/js/agents/concours.js"></script>
+<script src="assets/js/agents/messages.js"></script>
+<script src="assets/js/agents/rapports.js"></script>
+<script src="assets/js/agents/audit.js"></script>
+<script src="assets/js/agents/shell.js"></script>
 </body>
 </html>

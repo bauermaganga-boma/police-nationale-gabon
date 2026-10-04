@@ -1,4 +1,4 @@
-# Police nationale du Gabon — Plateforme de démonstration
+# Forces de Police Nationale (FPN) — Plateforme de démonstration
 
 Site statique (HTML/CSS/JS), sans installation. Ouvrir `index.html` via un petit serveur :
 

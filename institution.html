@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>L’institution – Police nationale du Gabon</title>
+<title>L’institution – Forces de Police Nationale (FPN)</title>
 <meta name="theme-color" content="#0A1B33"><meta name="color-scheme" content="only light">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site-v2.css">
 </head>
 <body data-page="institution" data-title="L’institution">
 <main>
-<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › L’institution</div><h1>Les Forces de Police Nationale</h1><p>La force de sécurité intérieure du Gabon, chargée de la sécurité des personnes et de la protection des biens.</p></div></section>
+<section class="phero has-lc"><div class="wrap"><div><div class="crumbs"><a href="index.html">Accueil</a> › L’institution</div><h1><span class="ph-ic" data-i="shield"></span>Les Forces de Police Nationale</h1><p>La force de sécurité intérieure du Gabon, chargée de la sécurité des personnes et de la protection des biens.</p></div><div id="leaders"></div></div></section>
 
 <section class="s">
  <div class="wrap grid2" style="align-items:center">
@@ -26,10 +27,10 @@
  <div class="wrap">
   <div class="sh reveal"><span class="tag">Nos missions</span><h2>Protéger, prévenir, servir</h2></div>
   <div class="grid4">
-   <div class="card hv reveal"><div class="ib" data-i="shield"></div><h3>Sécurité des personnes</h3><p>Intervention, patrouilles et présence sur le terrain, jour et nuit.</p></div>
-   <div class="card hv reveal"><div class="ib" data-i="search"></div><h3>Enquête judiciaire</h3><p>Recherche des auteurs d’infractions et assistance à la justice.</p></div>
-   <div class="card hv reveal"><div class="ib" data-i="heart"></div><h3>Prévention</h3><p>Conseils et actions auprès de la population, des écoles et des quartiers.</p></div>
-   <div class="card hv reveal"><div class="ib" data-i="id"></div><h3>Documents d’identité</h3><p>Passeports, cartes de séjour, visas et cartes d’identité via la DGDI.</p></div>
+   <div class="card hv reveal"><div class="ib c1" data-i="shield"></div><h3>Sécurité des personnes</h3><p>Intervention, patrouilles et présence sur le terrain, jour et nuit.</p></div>
+   <div class="card hv reveal"><div class="ib c6" data-i="search"></div><h3>Enquête judiciaire</h3><p>Recherche des auteurs d’infractions et assistance à la justice.</p></div>
+   <div class="card hv reveal"><div class="ib c4" data-i="heart"></div><h3>Prévention</h3><p>Conseils et actions auprès de la population, des écoles et des quartiers.</p></div>
+   <div class="card hv reveal"><div class="ib c5" data-i="id"></div><h3>Documents d’identité</h3><p>Passeports, cartes de séjour, visas et cartes d’identité via la DGDI.</p></div>
   </div>
  </div>
 </section>
@@ -45,12 +46,12 @@
  <div class="wrap">
   <div class="sh reveal"><span class="tag">Commandement</span><h2>Ceux qui dirigent</h2><p>Responsables cités dans la presse et les communiqués officiels (2026). À valider par le cabinet avant publication.</p></div>
   <div class="people">
-   <div class="person reveal"><div class="av">HN</div><div><b>Général Hervé Ngoma</b><span>Commandant en chef des Forces de Police Nationale</span></div></div>
+   <div class="person reveal"><div class="av"><img src="assets/img/commandant.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 10%;border-radius:50%"></div><div><b>Général Serge Hervé Ngoma</b><span>Commandant en chef des Forces de Police Nationale</span></div></div>
    <div class="person reveal"><div class="av">SK</div><div><b>Général Soter Katsou Langa</b><span>Commandant en chef adjoint</span></div></div>
    <div class="person reveal"><div class="av">MM</div><div><b>Général Marcel Mayimba</b><span>Commandant en chef adjoint</span></div></div>
    <div class="person reveal"><div class="av">JM</div><div><b>Général Juste Fernande Mbele</b><span>Préfet de police du Grand Libreville</span></div></div>
    <div class="person reveal"><div class="av">TN</div><div><b>Colonel Théophile Ndounda Leboussi</b><span>Directeur général de la Documentation et de l’Immigration</span></div></div>
-   <div class="person reveal"><div class="av">AN</div><div><b>Adrien Nguema Mba</b><span>Ministre de l’Intérieur, de la Sécurité et de la Décentralisation</span></div></div>
+   <div class="person reveal"><div class="av" data-i="building"></div><div><b>Adrien Nguema Mba</b><span>Ministre de l’Intérieur, de la Sécurité et de la Décentralisation</span></div></div>
   </div>
  </div>
 </section>
@@ -76,8 +77,8 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/layout.js"></script>
 <script>
-document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=icon(e.dataset.i));
-document.getElementById('dir').innerHTML=DIRECTIONS.map(d=>`<div class="card hv reveal"><span class="sig">${d[0]}</span><h3>${d[1]}</h3><p>${d[2]}</p></div>`).join('');
+mountLeaders(document.getElementById('leaders'));
+document.getElementById('dir').innerHTML=DIRECTIONS.map((d,i)=>`<div class="card hv reveal"><div class="ib ${['c1','c2','c3','c4','c5','c6','c1','c2','c3'][i]}">${icon(d[3])}</div><span class="sig">${d[0]}</span><h3>${d[1]}</h3><p>${d[2]}</p></div>`).join('');
 document.querySelectorAll('.acc button').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('open'));
 document.querySelectorAll('#dir .reveal').forEach(e=>e.classList.add('in'));
 </script>

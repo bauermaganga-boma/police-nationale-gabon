@@ -26,14 +26,14 @@ window.NEWS=[
   src:[['Infos Gabon – virage numérique','https://fr.infosgabon.com/gabon-la-police-nationale-sengage-dans-le-virage-numerique-entre-promesses-de-transparence-et-defis-de-mise-en-oeuvre/'],['AllAfrica – tournée du ministre','https://fr.allafrica.com/stories/202602070236.html']]}
 ];
 window.DIRECTIONS=[
- ['PJ','Police judiciaire','Enquêtes sur les crimes et délits, recherche des auteurs.'],
- ['PTS','Police technique et scientifique','Constatations, relevés et analyses au service des enquêtes.'],
- ['OCLAD','Office central de lutte antidrogue','Lutte contre le trafic et la consommation de stupéfiants.'],
- ['DSU','Direction de la sécurité urbaine','Présence et prévention dans les espaces urbains.'],
- ['DSP','Direction de la sécurité publique','Sécurité quotidienne : commissariats, patrouilles, ordre public.'],
- ['DSA','Direction des services administratifs','Ressources humaines, moyens, logistique et administration.'],
- ['DGDI','Documentation et Immigration','Passeports, cartes de séjour, visas, cartes d’identité.'],
- ['INTERPOL','Interpol · Afripol','Coopération policière internationale et africaine.'],
- ['PPGL','Préfecture de police du Grand Libreville','Sécurité de la capitale et de son agglomération.']
+ ['PJ','Police judiciaire','Enquêtes sur les crimes et délits, recherche des auteurs.','gavel'],
+ ['PTS','Police technique et scientifique','Constatations, relevés et analyses au service des enquêtes.','flask'],
+ ['OCLAD','Office central de lutte antidrogue','Lutte contre le trafic et la consommation de stupéfiants.','alert'],
+ ['DSU','Direction de la sécurité urbaine','Présence et prévention dans les espaces urbains.','building'],
+ ['DSP','Direction de la sécurité publique','Sécurité quotidienne : commissariats, patrouilles, ordre public.','shield'],
+ ['DSA','Direction des services administratifs','Ressources humaines, moyens, logistique et administration.','doc'],
+ ['DGDI','Documentation et Immigration','Passeports, cartes de séjour, visas, cartes d’identité.','id'],
+ ['INTERPOL','Interpol · Afripol','Coopération policière internationale et africaine.','globe'],
+ ['PPGL','Préfecture de police du Grand Libreville','Sécurité de la capitale et de son agglomération.','badge']
 ];
 window.fmtDate=d=>new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});

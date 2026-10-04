@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Mes démarches – Police nationale du Gabon</title>
+<title>Mes démarches – Forces de Police Nationale (FPN)</title>
 <meta name="theme-color" content="#0A1B33"><meta name="color-scheme" content="only light">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site-v2.css">
 </head>
 <body data-page="demarches" data-title="Mes démarches">
 <main>
-<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Mes démarches</div><h1>Mes démarches en ligne</h1><p>Déposez une pré-plainte, faites un signalement ou prenez rendez-vous. Vous recevez un numéro de suivi pour consulter l’avancement de votre dossier.</p></div></section>
+<section class="phero"><div class="wrap"><div class="crumbs"><a href="index.html">Accueil</a> › Mes démarches</div><h1><span class="ph-ic" data-i="file"></span>Mes démarches en ligne</h1><p>Déposez une pré-plainte, faites un signalement ou prenez rendez-vous. Joignez vos documents et recevez un numéro de suivi pour consulter l’avancement de votre dossier.</p></div></section>
 <section class="s" style="padding-top:36px">
 <div class="wrap">
 <div class="warn" style="margin-bottom:22px"><b>Danger immédiat ?</b> N’utilisez pas ce formulaire : appelez le <a href="tel:177"><b>177</b></a> ou utilisez le bouton <b>Alerte 177</b>. La pré-plainte ne remplace pas le dépôt de plainte : elle prépare votre rendez-vous au commissariat.</div>
@@ -19,9 +20,9 @@
 <div class="split">
  <div class="card" id="panels"></div>
  <aside style="display:grid;gap:16px">
-  <div class="card"><h3>Déjà une demande ?</h3><p style="margin-bottom:14px">Retrouvez l’avancement de votre dossier avec votre numéro de suivi.</p><a class="btn navy block" href="suivi.html">Suivre ma demande</a></div>
+  <div class="card"><div class="ib c6" data-i="search"></div><h3>Déjà une demande ?</h3><p style="margin-bottom:14px">Retrouvez l’avancement de votre dossier avec votre numéro de suivi.</p><a class="btn navy block" href="suivi.html">Suivre ma demande</a></div>
   <div class="info"><b>Vos données sont protégées.</b> Elles ne sont utilisées que pour traiter votre demande. Les signalements anonymes ne demandent aucune identité.</div>
-  <div class="card" style="background:var(--navy);color:#cfe0ff;border:0"><h3 style="color:#fff">Besoin d’aide ?</h3><p style="color:#cfe0ff;margin-bottom:14px">Un agent peut vous orienter au commissariat le plus proche.</p><a class="btn gold block" href="commissariats.html">Trouver un commissariat</a></div>
+  <div class="card" style="background:var(--navy);color:#cfe0ff;border:0"><div class="ib c3" data-i="map"></div><h3 style="color:#fff">Besoin d’aide ?</h3><p style="color:#cfe0ff;margin-bottom:14px">Un agent peut vous orienter au commissariat le plus proche, dans votre province.</p><a class="btn gold block" href="commissariats.html">Trouver un commissariat</a></div>
  </aside>
 </div>
 </div></section>
@@ -29,44 +30,54 @@
 <script src="assets/js/store.js"></script>
 <script src="assets/js/layout.js"></script>
 <script>
-const COM=FPN.COMMISSARIATS.filter(c=>c.type!=='Service');
-const comOpts=COM.map(c=>`<option value="${c.id}">${c.nom}</option>`).join('');
+const where=`<div class="row2"><div class="fld"><label>Province <i>*</i></label><select name="province" data-p required></select></div><div class="fld"><label>Commissariat <i>*</i></label><select name="commissariat" data-c required></select></div></div>`;
 const contact=`<div class="row2"><div class="fld"><label>Nom et prénom <i>*</i></label><input name="nom" required autocomplete="name"></div><div class="fld"><label>Téléphone <i>*</i></label><input name="tel" type="tel" inputmode="tel" required placeholder="+241 06 00 00 00" autocomplete="tel"></div></div><div class="fld"><label>E-mail (facultatif)</label><input name="email" type="email" autocomplete="email"></div>`;
 const consent=`<label class="chk"><input type="checkbox" required> Je certifie que les informations fournies sont exactes. Je sais qu’une fausse déclaration est passible de sanctions.</label>`;
+const att=(l,c)=>`<div data-attach data-label="${l}" ${c?'data-camera':''}></div>`;
 const F={
- preplainte:{t:'Pré-plainte',i:'file',h:'Déclarez les faits en ligne, puis présentez-vous au commissariat choisi avec votre numéro de suivi.',f:`
+ preplainte:{t:'Pré-plainte',i:'file',h:'Déclarez les faits en ligne, joignez vos pièces, puis présentez-vous au commissariat choisi avec votre numéro de suivi.',f:`
   <div class="row2"><div class="fld"><label>Nature des faits <i>*</i></label><select name="subject" required><option>Vol de téléphone portable</option><option>Vol à l’arraché</option><option>Cambriolage de domicile</option><option>Vol de véhicule / moto</option><option>Perte de documents</option><option>Dégradation de biens</option><option>Autre</option></select></div><div class="fld"><label>Date des faits <i>*</i></label><input type="date" name="date" required></div></div>
-  <div class="row2"><div class="fld"><label>Quartier / lieu <i>*</i></label><input name="quartier" required placeholder="Ex. Akébé, Libreville"></div><div class="fld"><label>Commissariat souhaité <i>*</i></label><select name="commissariat" required>${comOpts}</select></div></div>
-  <div class="fld"><label>Description des faits <i>*</i></label><textarea name="description" required placeholder="Que s’est-il passé ? Heure approximative, objets concernés, description des personnes…"></textarea></div>${contact}${consent}`},
+  ${where}<div class="fld"><label>Quartier / lieu précis <i>*</i></label><input name="quartier" required placeholder="Ex. Akébé, près du marché"></div>
+  <div class="fld"><label>Description des faits <i>*</i></label><textarea name="description" required placeholder="Que s’est-il passé ? Heure approximative, objets concernés, description des personnes…"></textarea></div>
+  ${att('Joindre un dossier : photos, constat, facture, pièce d’identité…',true)}${contact}${consent}`},
  cyber:{t:'Signalement cyber',i:'globe',h:'Arnaque Mobile Money, usurpation de compte, chantage sur les réseaux sociaux, faux site de vente.',f:`
   <div class="row2"><div class="fld"><label>Type d’infraction <i>*</i></label><select name="subject" required><option>Arnaque Mobile Money</option><option>Usurpation de compte / d’identité</option><option>Chantage ou menaces en ligne</option><option>Faux site ou fausse annonce</option><option>Harcèlement en ligne</option><option>Autre</option></select></div><div class="fld"><label>Plateforme concernée</label><select name="plateforme"><option>Facebook</option><option>WhatsApp</option><option>TikTok</option><option>Instagram</option><option>SMS / appel</option><option>Autre</option></select></div></div>
   <div class="row2"><div class="fld"><label>Montant perdu (FCFA), si concerné</label><input name="montant" inputmode="numeric"></div><div class="fld"><label>Numéro ou profil de l’auteur</label><input name="auteur" placeholder="Numéro, lien du profil…"></div></div>
-  <div class="fld"><label>Que s’est-il passé ? <i>*</i></label><textarea name="description" required></textarea><small>Conservez les captures d’écran et messages : ils vous seront demandés.</small></div><input type="hidden" name="commissariat" value="plb">${contact}${consent}`},
+  ${where}
+  <div class="fld"><label>Que s’est-il passé ? <i>*</i></label><textarea name="description" required></textarea></div>
+  ${att('Joindre vos preuves : captures d’écran, messages, reçus de transfert…')}${contact}${consent}`},
  anonyme:{t:'Signalement anonyme',i:'eye',h:'Trafic, zone d’insécurité, éclairage défaillant : aucune identité n’est demandée.',f:`
   <div class="row2"><div class="fld"><label>Objet du signalement <i>*</i></label><select name="subject" required><option>Trafic ou consommation de drogue</option><option>Zone d’insécurité</option><option>Éclairage public défaillant</option><option>Véhicule abandonné</option><option>Comportement suspect</option><option>Autre</option></select></div><div class="fld"><label>Quartier <i>*</i></label><input name="quartier" required></div></div>
+  ${where}
   <div class="fld"><label>Description <i>*</i></label><textarea name="description" required placeholder="Lieu précis, horaires, éléments utiles…"></textarea></div>
-  <div class="fld"><label>Photo (facultatif)</label><input type="file" name="photo" accept="image/*" capture="environment"></div><input type="hidden" name="commissariat" value="lbv1"><input type="hidden" name="anon" value="1">
+  ${att('Joindre une photo ou une vidéo',true)}<input type="hidden" name="anon" value="1">
   <div class="info">Aucune donnée personnelle n’est enregistrée. Conservez simplement le numéro de suivi.</div>`},
  objet:{t:'Objets perdus / trouvés',i:'box',h:'Déclarez un objet perdu ou signalez un objet trouvé.',f:`
   <div class="row2"><div class="fld"><label>Je… <i>*</i></label><select name="sens" required><option>J’ai perdu un objet</option><option>J’ai trouvé un objet</option></select></div><div class="fld"><label>Type d’objet <i>*</i></label><select name="subject" required><option>Pièce d’identité</option><option>Téléphone</option><option>Portefeuille / sac</option><option>Clés</option><option>Autre</option></select></div></div>
-  <div class="row2"><div class="fld"><label>Lieu <i>*</i></label><input name="quartier" required></div><div class="fld"><label>Commissariat <i>*</i></label><select name="commissariat">${comOpts}</select></div></div>
-  <div class="fld"><label>Description <i>*</i></label><textarea name="description" required placeholder="Couleur, marque, signes particuliers…"></textarea></div>${contact}${consent}`},
- rdv:{t:'Rendez-vous DGDI',i:'id',h:'Passeport, carte de séjour, visa : choisissez votre créneau.',f:`
+  ${where}<div class="fld"><label>Lieu <i>*</i></label><input name="quartier" required></div>
+  <div class="fld"><label>Description <i>*</i></label><textarea name="description" required placeholder="Couleur, marque, signes particuliers…"></textarea></div>
+  ${att('Joindre une photo de l’objet ou un justificatif',true)}${contact}${consent}`},
+ rdv:{t:'Rendez-vous DGDI',i:'id',h:'Passeport, carte de séjour, visa : choisissez votre créneau et joignez vos justificatifs.',f:`
   <div class="row2"><div class="fld"><label>Démarche <i>*</i></label><select name="subject" required><option>Renouvellement de passeport</option><option>Première demande de passeport</option><option>Carte de séjour</option><option>Demande de visa</option><option>Carte d’identité</option></select></div><div class="fld"><label>Date souhaitée <i>*</i></label><input type="date" name="date" required></div></div>
-  <div class="fld"><label>Créneau</label><select name="creneau"><option>Matin (7 h 30 – 11 h)</option><option>Après-midi (12 h – 15 h)</option></select></div><input type="hidden" name="commissariat" value="dgdi">${contact}${consent}`}
+  <div class="fld"><label>Créneau</label><select name="creneau"><option>Matin (7 h 30 – 11 h)</option><option>Après-midi (12 h – 15 h)</option></select></div><input type="hidden" name="commissariat" value="dgdi">
+  ${att('Joindre vos justificatifs : ancienne pièce, acte de naissance, photo…')}${contact}${consent}`}
 };
 const keys=Object.keys(F);
 document.getElementById('tabs').innerHTML=keys.map(k=>`<button role="tab" data-k="${k}">${icon(F[k].i)} ${F[k].t}</button>`).join('');
 document.getElementById('panels').innerHTML=keys.map(k=>`<div class="panel" id="p-${k}"><h2 style="font-size:1.4rem">${F[k].t}</h2><p style="color:var(--muted);margin:6px 0 18px">${F[k].h}</p><form class="form" data-k="${k}" novalidate>${F[k].f}<button class="btn red block" type="submit">Envoyer ma demande</button></form></div>`).join('');
+document.querySelectorAll('form[data-k]').forEach(f=>{const p=f.querySelector('[data-p]'),c=f.querySelector('[data-c]');if(p&&c)provinceSelects(p,c)});
+initAttach();
 function show(k){if(!F[k])k='preplainte';document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+k));document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k===k))}
 document.getElementById('tabs').onclick=e=>{const b=e.target.closest('button');if(b){show(b.dataset.k);history.replaceState(null,'','#'+b.dataset.k)}};
 show(location.hash.slice(1));window.onhashchange=()=>show(location.hash.slice(1));
-const today=new Date().toISOString().slice(0,10);document.querySelectorAll('input[type=date]').forEach(d=>d.max=d.name==='date'&&d.closest('form').dataset.k==='preplainte'?today:'');
-document.querySelectorAll('form[data-k]').forEach(f=>f.addEventListener('submit',e=>{
+const today=new Date().toISOString().slice(0,10);const pd=document.querySelector('form[data-k=preplainte] input[name=date]');if(pd)pd.max=today;
+document.querySelectorAll('form[data-k]').forEach(f=>f.addEventListener('submit',async e=>{
   e.preventDefault();if(!f.reportValidity())return;
+  const btn=f.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Envoi en cours…';
   const fd=Object.fromEntries(new FormData(f).entries());delete fd.photo;const k=f.dataset.k;
-  const r=FPN.addRequest(k,{subject:fd.subject,commissariat:fd.commissariat||'lbv1',details:fd,contact:fd.anon?{nom:'Anonyme',tel:'',email:''}:{nom:fd.nom,tel:fd.tel,email:fd.email}});
-  f.closest('.panel').innerHTML=`<div class="done"><div class="ok">${icon('check')}</div><h2>Demande enregistrée</h2><p style="color:var(--muted)">${k==='anonyme'?'Votre signalement a été transmis de façon anonyme.':'Votre demande a été transmise à '+FPN.commissariat(r.commissariat).nom+'.'}</p><div class="numb">${r.id}</div><p style="font-size:.92rem;color:var(--muted);margin-bottom:18px">Conservez ce numéro pour suivre votre dossier${k==='preplainte'?' et le présenter au commissariat':''}.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn navy" href="suivi.html?n=${r.id}">Suivre ma demande</a><a class="btn line" href="demarches.html">Nouvelle démarche</a></div></div>`;
+  const files=await f.querySelector('[data-attach]')._att.read();
+  const r=FPN.addRequest(k,{subject:fd.subject,commissariat:fd.commissariat||'lbv1',files,details:fd,contact:fd.anon?{nom:'Anonyme',tel:'',email:''}:{nom:fd.nom,tel:fd.tel,email:fd.email}});
+  f.closest('.panel').innerHTML=`<div class="done"><div class="ok">${icon('check')}</div><h2>Demande enregistrée</h2><p style="color:var(--muted)">${k==='anonyme'?'Votre signalement a été transmis de façon anonyme.':'Votre demande a été transmise à '+FPN.esc(FPN.commissariat(r.commissariat).nom)+' ('+FPN.province(r.province).nom+').'}${files.length?'<br>'+files.length+' pièce'+(files.length>1?'s':'')+' jointe'+(files.length>1?'s':'')+' transmise'+(files.length>1?'s':'')+'.':''}</p><div class="numb">${r.id}</div><p style="font-size:.92rem;color:var(--muted);margin-bottom:18px">Conservez ce numéro pour suivre votre dossier${k==='preplainte'?' et le présenter au commissariat':''}.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn navy" href="suivi.html?n=${r.id}">Suivre ma demande</a><a class="btn line" href="demarches.html">Nouvelle démarche</a></div></div>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }));
 </script>
