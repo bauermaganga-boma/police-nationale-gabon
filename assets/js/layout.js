@@ -85,7 +85,7 @@ const foot=`<footer class="foot"><div class="wrap"><div class="cols">
  <div><h4>${ic('lock')} Vous êtes agent ?</h4><div class="agents"><b>Espace agents sécurisé</b><span style="font-size:.88rem">Demandes citoyennes, main courante, ressources humaines, moyens, opérations — par province et par commissariat.</span><br><a class="btn gold sm" href="agents.html">${ic('lock')} Se connecter</a></div></div>
 </div>
 <div class="legal"><span>© 2026 Forces de Police Nationale (FPN) – République gabonaise · Version de démonstration</span><span>Site conçu et développé par <em>Rouana</em></span></div>
-<p class="credits">Crédits photo : Président de la République — Lukasz Kobus / Union européenne, CC BY 4.0 (Wikimedia Commons) · Commandant en chef — miboue.com · Opérations — presse gabonaise. Droits de réutilisation à confirmer avant mise en production.</p></div></footer>`;
+<p class="credits">Crédits photo : Président de la République — Lukasz Kobus / Union européenne, CC BY 4.0 (Wikimedia Commons) · Commandant en chef — miboue.com · Photos d’agents et de cérémonies — Forces de Police Nationale (fpn.ga) et presse gabonaise (Gabonmediatime, Gabonactu, Éthique Média Gabon). Droits de réutilisation à confirmer avant mise en production.</p></div></footer>`;
 const mainEnd=document.createElement('div');mainEnd.innerHTML=foot;document.body.appendChild(mainEnd.firstChild);
 
 /* Barre mobile */
@@ -146,11 +146,13 @@ window.mountHero=function(el){
   const S=[
    {img:'assets/img/president.jpg',pos:'center 22%',k:'Chef de l’État',h:'Brice Clotaire Oligui Nguema',p:'Président de la République gabonaise.',cap:'Photo : Lukasz Kobus / Union européenne, CC BY 4.0',btn:['institution.html','Le commandement']},
    {img:'assets/img/commandant.jpg',pos:'center 10%',k:'Commandement',h:'Général Serge Hervé Ngoma',p:'Commandant en chef des Forces de Police Nationale, à la tête de la Préfecture de police du Grand Libreville et des commissariats des neuf provinces.',cap:'Photo : miboue.com',btn:['institution.html','Les directions et services']},
+   {img:'assets/img/moto-policiere.jpg',pos:'center 30%',k:'Une police de proximité',h:'Présente dans la rue, jour et nuit',p:'Patrouilles, régulation de la circulation, présence dans les quartiers : des agents à votre service dans les neuf provinces.',cap:'Policière à moto — Forces de Police Nationale',btn:['commissariats.html','Trouver un commissariat']},
+   {img:'assets/img/police-route.jpg',pos:'center 30%',k:'Sécurité routière',h:'Réguler, protéger, informer',p:'La police assure la fluidité et la sécurité de la circulation, avec ses agents de régulation au cœur des carrefours.',cap:'Agent de régulation de la circulation — Forces de Police Nationale',btn:['prevention.html','Conseils de prévention']},
    {img:'assets/img/dotation.jpg',pos:'center',k:'Moyens et équipements',h:'Une police mieux équipée',p:'Le 2 mai 2026, de nouveaux équipements techniques et véhicules ont été remis aux forces de police, dans le cadre de la loi de programmation de la sécurité 2026-2030.',cap:'Cérémonie de remise — presse gabonaise',btn:['actualites.html#n4','Lire l’actualité']},
    {img:'assets/img/defile.jpg',pos:'center',k:'Forces de Police Nationale',h:'Au service de la population, partout au Gabon',p:'Sécurité des personnes et des biens, prévention, enquête judiciaire, documents d’identité : neuf provinces, une même mission.',cap:'Unités de la Police nationale',btn:['demarches.html','Faire une démarche en ligne']}
   ];
   el.className='hs';
-  el.innerHTML='<div class="hs-stage">'+S.map((s,i)=>'<div class="hs-slide'+(i?'':' on')+'"><div class="hs-txt"><em>'+s.k+'</em>'+(i?'<h2>':'<h1>')+s.h+(i?'</h2>':'</h1>')+'<p>'+s.p+'</p><div class="row"><a class="btn red" href="'+s.btn[0]+'">'+s.btn[1]+'</a>'+(i===3?'<button class="btn ghost" data-alert>Alerte 177</button>':'')+'</div></div><div class="hs-img"><img src="'+s.img+'" alt="'+s.h+'" style="object-position:'+s.pos+'"'+(i?' loading="lazy"':'')+'></div></div>').join('')+
+  el.innerHTML='<div class="hs-stage">'+S.map((s,i)=>'<div class="hs-slide'+(i?'':' on')+'"><div class="hs-txt"><em>'+s.k+'</em>'+(i?'<h2>':'<h1>')+s.h+(i?'</h2>':'</h1>')+'<p>'+s.p+'</p><div class="row"><a class="btn red" href="'+s.btn[0]+'">'+s.btn[1]+'</a>'+(i===S.length-1?'<button class="btn ghost" data-alert>Alerte 177</button>':'')+'</div></div><div class="hs-img"><img src="'+s.img+'" alt="'+s.h+'" style="object-position:'+s.pos+'"'+(i?' loading="lazy"':'')+'></div></div>').join('')+
   '<div class="hs-ctl"><div class="wrap"><div class="hs-dots">'+S.map((_,i)=>'<button class="'+(i?'':'on')+'" aria-label="Diapositive '+(i+1)+'"></button>').join('')+'</div><span class="hs-cap" id="hsCap">'+S[0].cap+'</span><div class="hs-arrows"><button aria-label="Précédent">'+ic('back')+'</button><button aria-label="Suivant" style="transform:scaleX(-1)">'+ic('back')+'</button></div></div></div></div>';
   const sl=[...el.querySelectorAll('.hs-slide')],ds=[...el.querySelectorAll('.hs-dots button')],cap=el.querySelector('#hsCap');let k=0,t;
   const go=n=>{sl[k].classList.remove('on');ds[k].classList.remove('on');k=(n+sl.length)%sl.length;sl[k].classList.add('on');ds[k].classList.add('on');cap.textContent=S[k].cap};
@@ -194,6 +196,8 @@ modal.querySelector('#alSend').onclick=async()=>{
   modal.querySelector('#alForm').style.display='none';modal.querySelector('#alDone').style.display='';
 };
 
+/* Image d'en-tête de page */
+(function(){const h=document.body.dataset.hero,p=document.querySelector('.phero');if(h&&p){p.classList.add('has-img');p.style.backgroundImage='linear-gradient(90deg,rgba(11,35,71,.96) 0%,rgba(11,35,71,.84) 55%,rgba(11,35,71,.5) 100%),url(assets/img/'+h+')'}})();
 /* Apparition au défilement */
 const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12}):null;
 document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
